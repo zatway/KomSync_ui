@@ -10,5 +10,5 @@ services:
     environment:
       BACKEND_UPSTREAM: ${BACKEND_UPSTREAM:-http://host.docker.internal:5237}
       PROD_ENV_VITE_BACKEND_ORIGIN: ${PROD_ENV_VITE_BACKEND_ORIGIN:-http://localhost:5237}
-       ports:
+    ports:
       - "127.0.0.1:8080:80"
