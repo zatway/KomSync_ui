@@ -12,7 +12,5 @@ WORKDIR /usr/share/nginx/html
 
 COPY --from=builder /app/dist ./
 COPY nginx.conf /etc/nginx/templates/default.conf.template
-COPY env.sh /docker-entrypoint.d/40-env-substitution.sh
-RUN chmod +x /docker-entrypoint.d/40-env-substitution.sh
 
 EXPOSE 80
