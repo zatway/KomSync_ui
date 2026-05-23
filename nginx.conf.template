@@ -3,8 +3,6 @@ server {
     listen [::]:80;
     server_name komsync.ru www.komsync.ru;
 
-    # Редирект всего HTTP → HTTPS
-;     return 301 https://komsync.ru$request_uri;
 }
 
 server {
@@ -14,14 +12,6 @@ server {
 
     root /usr/share/nginx/html;
     index index.html;
-
-;     # === SSL Сертификат ===
-;     ssl_certificate     /etc/nginx/ssl/komsync.ru.crt;
-;     ssl_certificate_key /etc/nginx/ssl/komsync.ru.key;
-
-    ssl_protocols       TLSv1.2 TLSv1.3;
-    ssl_ciphers         HIGH:!aNULL:!MD5:!3DES;
-    ssl_prefer_server_ciphers on;
 
     # Логика для www → без www (рекомендую)
     if ($host = www.komsync.ru) {
