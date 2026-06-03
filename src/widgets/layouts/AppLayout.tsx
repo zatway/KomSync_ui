@@ -9,7 +9,6 @@ const AppLayout = () => {
     const [mobileNavOpen, setMobileNavOpen] = useState(false)
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
     const isMdUp = useMediaQuery('(min-width: 768px)')
-    /** В выезжающем меню на телефоне не используем «узкий» режим с иконками по центру */
     const sidebarCollapsedEffective = isMdUp && sidebarCollapsed
 
     return (
