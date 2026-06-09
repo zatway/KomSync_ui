@@ -16,6 +16,8 @@ import {
 } from "@/shared/ui_shadcn/form";
 import {Input} from "@/shared/ui_shadcn/input";
 import {getApiErrorMessage} from "@/shared/lib";
+import {useState} from "react";
+import {Eye, EyeOff} from "lucide-react";
 
 const loginSchema = z.object({
     email: z.string().min(1, "Укажите email").email("Некорректный email"),
@@ -26,6 +28,7 @@ type LoginValues = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
     const [login, {isLoading, error}] = useLoginMutation();
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const navigate = useNavigate();
 
@@ -51,7 +54,7 @@ const LoginForm = () => {
     return (
         <div className="w-full max-w-md rounded-2xl bg-card p-6 sm:p-8 shadow-lg border">
             <div className="flex justify-center mb-6">
-                <Logo height={100} />
+                <Logo height={100}/>
             </div>
 
             <div className="text-center mb-6">
@@ -76,15 +79,28 @@ const LoginForm = () => {
                     <FormField
                         control={form.control}
                         name="password"
-                        render={({field}) => (
+                        render={({field}) =>
                             <FormItem>
                                 <FormLabel>Пароль</FormLabel>
                                 <FormControl>
-                                    <Input type="password" autoComplete="current-password" {...field} />
+                                    <div className="relative">
+                                        <Input
+                                            type={showPassword ? "text" : "password"}
+                                            autoComplete="current-password"
+                                            {...field}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                            {showPassword ? <EyeOff className="h-4 w-4"/> : <Eye className="h-4 w-4"/>}
+                                        </button>
+                                    </div>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
-                        )}
+                        }
                     />
                     <Button
                         type="submit"

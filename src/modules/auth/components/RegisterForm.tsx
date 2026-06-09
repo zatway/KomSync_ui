@@ -21,6 +21,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/shared/ui_shadcn/form";
+import {Eye, EyeOff} from "lucide-react";
 
 const roleMap = new Map<UserRole, string>([
     [UserRole.Admin, "Администратор"],
@@ -51,6 +52,8 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [showSuccess, setShowSuccess] = useState(false);
     const [registerMut, { isLoading }] = useRegisterMutation();
+
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const form = useForm<RegisterValues>({
         resolver: zodResolver(registerSchema),
@@ -131,15 +134,28 @@ const RegisterForm = () => {
                     <FormField
                         control={form.control}
                         name="password"
-                        render={({ field }) => (
+                        render={({field}) =>
                             <FormItem>
                                 <FormLabel>Пароль</FormLabel>
                                 <FormControl>
-                                    <Input type="password" autoComplete="new-password" {...field} />
+                                    <div className="relative">
+                                        <Input
+                                            type={showPassword ? "text" : "password"}
+                                            autoComplete="current-password"
+                                            {...field}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                        >
+                                            {showPassword ? <EyeOff className="h-4 w-4"/> : <Eye className="h-4 w-4"/>}
+                                        </button>
+                                    </div>
                                 </FormControl>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
-                        )}
+                        }
                     />
 
                     <FormField
